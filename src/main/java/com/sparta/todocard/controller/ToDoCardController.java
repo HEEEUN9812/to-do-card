@@ -30,4 +30,9 @@ public class ToDoCardController {
     public ToDoCardResponseDto getToDoCard (@PathVariable Long id){
         return toDoCardService.getToDoCard(id);
     }
+
+    @PutMapping("/to-do/{id}")
+    public ToDoCardResponseDto updateToDoCard(@PathVariable Long id, @RequestBody ToDoCardRequestDto requestDto){
+        return toDoCardService.updateToDoCard(id, requestDto);
+    }
 }

@@ -7,6 +7,7 @@ import com.sparta.todocard.entity.Card;
 import com.sparta.todocard.repository.ToDoCardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -33,8 +34,16 @@ public class ToDoCardService {
         return new ToDoCardResponseDto(card);
     }
 
+
     public Card findToDoCard(Long id){
         return toDoCardRepository.findById(id).orElseThrow(
                 () -> new NullPointerException("no " + id));
+    }
+
+    @Transactional
+    public ToDoCardResponseDto updateToDoCard(Long id, ToDoCardRequestDto requestDto) {
+        Card card = findToDoCard(id);
+        card.update(requestDto);
+        return new ToDoCardResponseDto(card);
     }
 }

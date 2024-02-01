@@ -24,4 +24,9 @@ public class Card {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
     }
+
+    public void update(ToDoCardRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
+    }
 }
