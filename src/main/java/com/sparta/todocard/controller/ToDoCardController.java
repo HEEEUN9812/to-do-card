@@ -22,7 +22,12 @@ public class ToDoCardController {
     }
 
     @GetMapping("/to-do")
-    public List<ToDoCardResponseDto> getToDoCard(){
-        return toDoCardService.getToDoCard();
+    public List<ToDoCardResponseDto> getToDoCardList(){
+        return toDoCardService.getToDoCardList();
+    }
+
+    @GetMapping("/to-do/{id}")
+    public ToDoCardResponseDto getToDoCard (@PathVariable Long id){
+        return toDoCardService.getToDoCard(id);
     }
 }
