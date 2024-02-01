@@ -4,10 +4,9 @@ import com.sparta.todocard.dto.ToDoCardRequestDto;
 import com.sparta.todocard.dto.ToDoCardResponseDto;
 import com.sparta.todocard.service.ToDoCardService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -20,5 +19,10 @@ public class ToDoCardController {
     @PostMapping("/to-do")
     public ToDoCardResponseDto createToDoCard(@RequestBody ToDoCardRequestDto requestDto){
         return toDoCardService.createToDoCard(requestDto);
+    }
+
+    @GetMapping("/to-do")
+    public List<ToDoCardResponseDto> getToDoCard(){
+        return toDoCardService.getToDoCard();
     }
 }

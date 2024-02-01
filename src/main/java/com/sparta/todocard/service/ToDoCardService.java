@@ -8,6 +8,9 @@ import com.sparta.todocard.repository.ToDoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class ToDoCardService {
@@ -19,5 +22,9 @@ public class ToDoCardService {
         Card card = toDoRepository.save(new Card(requestDto));
 
         return new ToDoCardResponseDto(card);
+    }
+
+    public List<ToDoCardResponseDto> getToDoCard() {
+        return toDoRepository.findAll().stream().map(ToDoCardResponseDto::new).toList();
     }
 }
