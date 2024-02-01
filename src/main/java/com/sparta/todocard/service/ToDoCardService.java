@@ -46,4 +46,11 @@ public class ToDoCardService {
         card.update(requestDto);
         return new ToDoCardResponseDto(card);
     }
+
+    @Transactional
+    public Long deleteToDoCard(Long id) {
+        Card card = findToDoCard(id);
+        toDoCardRepository.delete(card);
+        return id;
+    }
 }

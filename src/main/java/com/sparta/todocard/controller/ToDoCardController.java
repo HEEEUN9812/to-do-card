@@ -35,4 +35,9 @@ public class ToDoCardController {
     public ToDoCardResponseDto updateToDoCard(@PathVariable Long id, @RequestBody ToDoCardRequestDto requestDto){
         return toDoCardService.updateToDoCard(id, requestDto);
     }
+
+    @DeleteMapping("/to-do/{id}")
+    public Long deleteToDoCard(@PathVariable Long id){
+        return toDoCardService.deleteToDoCard(id);
+    }
 }
