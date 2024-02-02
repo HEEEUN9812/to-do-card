@@ -18,7 +18,7 @@ public class CommentController {
     private final CommentService commentService;
 
 
-    @PostMapping("/{id}")
+    @PostMapping("/{id}/comment")
     public CommentResponseDto addComment(@RequestBody CommentRequestDto requestDto, Card card){
         return commentService.addComment(requestDto, card);
     }
@@ -26,5 +26,10 @@ public class CommentController {
     @GetMapping("/{id}/comment")
     public List<CommentResponseDto> getComment(Card card){
         return commentService.getComment(card);
+    }
+
+    @DeleteMapping("/{id}/comment/{commentId}")
+    public Long deleteComment(Card card, @PathVariable Long commentId){
+        return commentService.deleteComment(card, commentId);
     }
 }

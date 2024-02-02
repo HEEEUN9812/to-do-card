@@ -9,6 +9,7 @@ import com.sparta.todocard.repository.CommentRepository;
 import com.sparta.todocard.repository.ToDoCardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,4 +31,24 @@ public class CommentService {
         return commentRepository.findAllByCard(card).stream().map(CommentResponseDto::new).toList();
 
     }
+
+    @Transactional
+    public Long deleteComment(Card card, Long commentId) {
+        List<Comment> commentList = commentRepository.findAllByCard(card);
+        for (Comment comment : commentList) {
+            if (comment.getId().equals(commentId)){
+             commentRepository.delete(comment);
+            }
+        }
+        return commentId;
+    }
+
+//    private Comment findComment(Card card, Long id){
+//        try{
+//         return commentRepository.deleteByCardAndId(card, id);
+//        }
+//        catch (Exception e){
+//         new NullPointerException("no" + id);
+//        }
+//    }
 }
