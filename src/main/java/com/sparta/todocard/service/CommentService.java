@@ -6,7 +6,7 @@ import com.sparta.todocard.dto.CommentResponseDto;
 import com.sparta.todocard.entity.Card;
 import com.sparta.todocard.entity.Comment;
 import com.sparta.todocard.repository.CommentRepository;
-import com.sparta.todocard.repository.ToDoCardRepository;
+import com.sparta.todocard.repository.CardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,8 +18,6 @@ import java.util.List;
 public class CommentService {
 
     private final CommentRepository commentRepository;
-
-    private final ToDoCardRepository toDoCardRepository;
 
 
     public CommentResponseDto addComment(CommentRequestDto requestDto, Card card) {

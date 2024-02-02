@@ -1,6 +1,6 @@
 package com.sparta.todocard.entity;
 
-import com.sparta.todocard.dto.ToDoCardRequestDto;
+import com.sparta.todocard.dto.CardRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @Table(name = "to-do card")
 @NoArgsConstructor
-public class Card {
+public class Card extends Timestamped{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,12 +28,16 @@ public class Card {
     @OneToMany(mappedBy = "card")
     private List<Comment> commentList = new ArrayList<>();
 
-    public Card(ToDoCardRequestDto requestDto) {
+//    @ManyToOne
+//    @JoinColumn(name = "user_id", nullable = false)
+//    private User user;
+
+    public Card(CardRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
     }
 
-    public void update(ToDoCardRequestDto requestDto) {
+    public void update(CardRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
     }
