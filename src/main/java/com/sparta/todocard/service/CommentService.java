@@ -10,6 +10,8 @@ import com.sparta.todocard.repository.ToDoCardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class CommentService {
@@ -22,5 +24,10 @@ public class CommentService {
     public CommentResponseDto addComment(CommentRequestDto requestDto, Card card) {
         Comment comment = commentRepository.save(new Comment(requestDto, card));
         return new CommentResponseDto(comment);
+    }
+
+    public List<CommentResponseDto> getComment(Card card) {
+        return commentRepository.findAllByCard(card).stream().map(CommentResponseDto::new).toList();
+
     }
 }
