@@ -1,5 +1,6 @@
 package com.sparta.todocard.controller;
 
+import com.sparta.todocard.dto.CardCommentResponseDto;
 import com.sparta.todocard.dto.CardRequestDto;
 import com.sparta.todocard.dto.CardResponseDto;
 import com.sparta.todocard.entity.User;
@@ -25,12 +26,12 @@ public class CardController {
     }
 
     @GetMapping("/to-do")
-    public List<CardResponseDto> getCardList(){
+    public List<CardCommentResponseDto> getCardList(){
         return cardService.getCardList();
     }
 
     @GetMapping("/to-do/{id}")
-    public CardResponseDto getCard(@PathVariable Long id){
+    public CardCommentResponseDto getCard(@PathVariable Long id){
         return cardService.getCard(id);
     }
 

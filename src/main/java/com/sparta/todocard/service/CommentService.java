@@ -25,11 +25,6 @@ public class CommentService {
         return new CommentResponseDto(comment, user);
     }
 
-    public List<CommentResponseDto> getComment(Card card) {
-        return commentRepository.findAllByCard(card).stream().map(e -> new CommentResponseDto(e, e.getUser())).toList();
-
-    }
-
     @Transactional
     public CommentResponseDto updateComment(CommentRequestDto requestDto, Card card, Long commentId) {
         List<Comment> commentList = commentRepository.findAllByCard(card);

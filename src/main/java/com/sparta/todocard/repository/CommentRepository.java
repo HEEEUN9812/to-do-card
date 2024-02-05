@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> findAllByCard(Card card);
+
 //    Comment deleteByCardAndId(Card toDo, Long commentId);
 
 }

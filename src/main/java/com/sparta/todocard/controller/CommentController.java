@@ -25,11 +25,6 @@ public class CommentController {
         return commentService.addComment(requestDto, card, userDetails.getUser());
     }
 
-    @GetMapping("/{id}/comment")
-    public List<CommentResponseDto> getComment(Card card){
-        return commentService.getComment(card);
-    }
-
     @PutMapping("/{id}/comment/{commentId}")
     public CommentResponseDto updateComment(@PathVariable Long commentId ,@RequestBody CommentRequestDto requestDto, Card card){
         return commentService.updateComment(requestDto, card, commentId);

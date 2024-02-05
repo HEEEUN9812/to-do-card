@@ -1,11 +1,14 @@
 package com.sparta.todocard.service;
 
 
+import com.sparta.todocard.dto.CardCommentResponseDto;
 import com.sparta.todocard.dto.CardRequestDto;
 import com.sparta.todocard.dto.CardResponseDto;
+import com.sparta.todocard.dto.CommentResponseDto;
 import com.sparta.todocard.entity.Card;
 import com.sparta.todocard.entity.User;
 import com.sparta.todocard.repository.CardRepository;
+import com.sparta.todocard.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +20,7 @@ import java.util.List;
 public class CardService {
 
     private final CardRepository cardRepository;
+    private final CommentRepository commentRepository;
 
 
     public CardResponseDto createCard(CardRequestDto requestDto, User user) {
@@ -25,13 +29,14 @@ public class CardService {
         return new CardResponseDto(card, user);
     }
 
-    public List<CardResponseDto> getCardList() {
-        return cardRepository.findAll().stream().map(e -> new CardResponseDto(e, e.getUser())).toList();
+    public List<CardCommentResponseDto> getCardList() {
+        return cardRepository.findAll().stream().map(e -> new CardCommentResponseDto(e, e.getUser(),commentRepository.findAllByCard(e).stream().map(f -> new CommentResponseDto(f, f.getUser())).toList())).toList();
     }
 
-    public CardResponseDto getCard(Long id) {
+    public CardCommentResponseDto getCard(Long id) {
         Card card = findCard(id);
-        return new CardResponseDto(card, card.getUser());
+        List<CommentResponseDto> commentList = commentRepository.findAllByCard(card).stream().map(e -> new CommentResponseDto(e, e.getUser())).toList();
+        return new CardCommentResponseDto(card, card.getUser(), commentList);
     }
 
 
