@@ -26,8 +26,8 @@ public class Card extends Timestamped {
     private String content;
 
 
-//    @OneToMany(mappedBy = "card")
-//    private List<Comment> commentList = new ArrayList<>();
+    @OneToMany(mappedBy = "card", cascade = CascadeType.REMOVE)
+    private List<Comment> commentList = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
