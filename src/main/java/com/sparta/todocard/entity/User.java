@@ -25,8 +25,6 @@ public class User {
     @Column
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<Card> cardList = new ArrayList<>();
 
 
     public User(String username, String password) {

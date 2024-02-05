@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +28,9 @@ public class Card extends Timestamped {
     private String content;
 
 
-    @OneToMany(mappedBy = "card", cascade = CascadeType.REMOVE)
-    private List<Comment> commentList = new ArrayList<>();
-
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     public Card(CardRequestDto requestDto, User user) {
