@@ -3,7 +3,6 @@ package com.sparta.todocard.controller;
 import com.sparta.todocard.dto.CardCommentResponseDto;
 import com.sparta.todocard.dto.CardRequestDto;
 import com.sparta.todocard.dto.CardResponseDto;
-import com.sparta.todocard.entity.User;
 import com.sparta.todocard.security.UserDetailsImpl;
 import com.sparta.todocard.service.CardService;
 import lombok.RequiredArgsConstructor;
@@ -35,14 +34,18 @@ public class CardController {
         return cardService.getCard(id);
     }
 
-    @PutMapping("/to-do/{id}")
-    public CardResponseDto updateCard(@PathVariable Long id, @RequestBody CardRequestDto requestDto){
-        return cardService.updateCard(id, requestDto);
+    @PatchMapping("/to-do/{id}")
+    public CardResponseDto updateCard(@PathVariable Long id, @RequestBody CardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return cardService.updateCard(id, requestDto,userDetails.getUser());
     }
 
+//    @PatchMapping("/to-do/{id}")
+//    public CardResponseDto completeCard(@PathVariable Long id, @RequestBody CardCompleteRequestDto requestDto){
+//        return cardService.completeCard(id, requestDto);
+//    }
     @DeleteMapping("/to-do/{id}")
-    public Long deleteCard(@PathVariable Long id){
-        return cardService.deleteCard(id);
+    public Long deleteCard(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return cardService.deleteCard(id,userDetails.getUser());
     }
 
 }

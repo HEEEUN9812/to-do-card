@@ -1,10 +1,7 @@
 package com.sparta.todocard.service;
 
 
-import com.sparta.todocard.dto.CardCommentResponseDto;
-import com.sparta.todocard.dto.CardRequestDto;
-import com.sparta.todocard.dto.CardResponseDto;
-import com.sparta.todocard.dto.CommentResponseDto;
+import com.sparta.todocard.dto.*;
 import com.sparta.todocard.entity.Card;
 import com.sparta.todocard.entity.User;
 import com.sparta.todocard.repository.CardRepository;
@@ -41,21 +38,28 @@ public class CardService {
 
 
     @Transactional
-    public CardResponseDto updateCard(Long id, CardRequestDto requestDto) {
+    public CardResponseDto updateCard(Long id, CardRequestDto requestDto, User user) {
         Card card = findCard(id);
         card.update(requestDto);
-        return new CardResponseDto(card, card.getUser());
+        return new CardResponseDto(card, user);
     }
 
     @Transactional
-    public Long deleteCard(Long id) {
+    public Long deleteCard(Long id, User user) {
         Card card = findCard(id);
         cardRepository.delete(card);
         return id;
     }
 
+
     public Card findCard(Long id) {
         return cardRepository.findById(id).orElseThrow(
                 () -> new NullPointerException("no " + id));
     }
+    //    @Transactional
+//    public CardResponseDto completeCard(Long id, CardCompleteRequestDto requestDto) {
+//        Card card = findCard(id);
+//        card.complete(requestDto);
+//        return new CardResponseDto(card, card.getUser());
+//    }
 }

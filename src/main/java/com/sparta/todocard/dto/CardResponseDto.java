@@ -16,6 +16,7 @@ public class CardResponseDto {
     private String content;
     private String username;
     private LocalDateTime createdAt;
+    private boolean complete;
 
 
 
@@ -25,5 +26,6 @@ public class CardResponseDto {
         this.content = card.getContent();
         this.username = user.getUsername();
         this.createdAt = card.getCreatedAt();
+        this.complete = card.isComplete();
     }
 }

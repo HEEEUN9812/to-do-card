@@ -8,9 +8,6 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Getter
 @Setter
@@ -27,11 +24,13 @@ public class Card extends Timestamped {
     @Column(name = "content", nullable = false)
     private String content;
 
-
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
+
+    @Column(name = "complete", nullable = false)
+    private boolean complete = false;
 
     public Card(CardRequestDto requestDto, User user) {
         this.title = requestDto.getTitle();
@@ -40,7 +39,14 @@ public class Card extends Timestamped {
     }
 
     public void update(CardRequestDto requestDto) {
-        this.title = requestDto.getTitle();
-        this.content = requestDto.getContent();
+        if(requestDto.getTitle() != null){
+            this.title = requestDto.getTitle();
+        }
+        if(requestDto.getContent() != null){
+            this.content = requestDto.getContent();
+        }
+        if(!complete){
+            this.complete = requestDto.isComplete();
+        }
     }
 }
