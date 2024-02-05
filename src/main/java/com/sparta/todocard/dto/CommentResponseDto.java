@@ -5,6 +5,8 @@ import com.sparta.todocard.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor
 public class CommentResponseDto {
@@ -12,6 +14,7 @@ public class CommentResponseDto {
     private String content;
     private Long card_id;
     private String username;
+    private LocalDateTime createdAt;
 
 
     public CommentResponseDto(Comment comment, User user) {
@@ -19,5 +22,6 @@ public class CommentResponseDto {
         this.content = comment.getContent();
         this.card_id = comment.getCard().getId();
         this.username = user.getUsername();
+        this.createdAt = comment.getCreatedAt();
     }
 }
