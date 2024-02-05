@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @Table(name = "to-do card")
 @NoArgsConstructor
-public class Card extends Timestamped{
+public class Card extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

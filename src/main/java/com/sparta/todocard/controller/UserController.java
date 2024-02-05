@@ -33,11 +33,11 @@ public class UserController {
             for (FieldError fieldError : bindingResult.getFieldErrors()) {
                 log.error(fieldError.getField() + " 필드 : " + fieldError.getDefaultMessage());
             }
-            return ResponseEntity.badRequest().body("실패");
+            return ResponseEntity.badRequest().body("회원가입 실패");
         }
 
         userService.signup(requestDto);
 
-        return ResponseEntity.ok().body("회원가입성공");
+        return ResponseEntity.ok().body("회원가입 성공");
     }
 }

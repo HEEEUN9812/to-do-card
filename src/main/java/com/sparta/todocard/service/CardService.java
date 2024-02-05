@@ -22,17 +22,16 @@ public class CardService {
     public CardResponseDto createCard(CardRequestDto requestDto, User user) {
         Card card = cardRepository.save(new Card(requestDto, user));
 
-        return new CardResponseDto(card);
+        return new CardResponseDto(card, user);
     }
 
     public List<CardResponseDto> getCardList() {
-        return cardRepository.findAll().stream().map(CardResponseDto::new).toList();
+        return cardRepository.findAll().stream().map(e -> new CardResponseDto(e, e.getUser())).toList();
     }
 
     public CardResponseDto getCard(Long id) {
         Card card = findCard(id);
-
-        return new CardResponseDto(card);
+        return new CardResponseDto(card, card.getUser());
     }
 
 
@@ -40,7 +39,7 @@ public class CardService {
     public CardResponseDto updateCard(Long id, CardRequestDto requestDto) {
         Card card = findCard(id);
         card.update(requestDto);
-        return new CardResponseDto(card);
+        return new CardResponseDto(card, card.getUser());
     }
 
     @Transactional

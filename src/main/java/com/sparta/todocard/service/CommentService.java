@@ -7,7 +7,6 @@ import com.sparta.todocard.entity.Card;
 import com.sparta.todocard.entity.Comment;
 import com.sparta.todocard.entity.User;
 import com.sparta.todocard.repository.CommentRepository;
-import com.sparta.todocard.repository.CardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,11 +22,11 @@ public class CommentService {
 
     public CommentResponseDto addComment(CommentRequestDto requestDto, Card card, User user) {
         Comment comment = commentRepository.save(new Comment(requestDto, card, user));
-        return new CommentResponseDto(comment);
+        return new CommentResponseDto(comment, user);
     }
 
     public List<CommentResponseDto> getComment(Card card) {
-        return commentRepository.findAllByCard(card).stream().map(CommentResponseDto::new).toList();
+        return commentRepository.findAllByCard(card).stream().map(e -> new CommentResponseDto(e, e.getUser())).toList();
 
     }
 
@@ -35,9 +34,9 @@ public class CommentService {
     public CommentResponseDto updateComment(CommentRequestDto requestDto, Card card, Long commentId) {
         List<Comment> commentList = commentRepository.findAllByCard(card);
         for (Comment comment : commentList) {
-            if(comment.getId().equals(commentId)){
+            if (comment.getId().equals(commentId)) {
                 comment.update(requestDto);
-               return new CommentResponseDto(comment);
+                return new CommentResponseDto(comment, card.getUser());
             }
         }
         return null;
@@ -47,8 +46,8 @@ public class CommentService {
     public Long deleteComment(Card card, Long commentId) {
         List<Comment> commentList = commentRepository.findAllByCard(card);
         for (Comment comment : commentList) {
-            if (comment.getId().equals(commentId)){
-             commentRepository.delete(comment);
+            if (comment.getId().equals(commentId)) {
+                commentRepository.delete(comment);
             }
         }
         return commentId;

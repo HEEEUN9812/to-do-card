@@ -4,7 +4,6 @@ import com.sparta.todocard.entity.Card;
 import com.sparta.todocard.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -18,11 +17,12 @@ public class CardResponseDto {
     private String username;
     private LocalDateTime createdAt;
 
-    public CardResponseDto(Card card) {
+    public CardResponseDto(Card card, User user) {
         this.id = card.getId();
         this.title = card.getTitle();
         this.content = card.getContent();
-//        this.username = user.getUsername();
+        this.username = user.getUsername();
         this.createdAt = card.getCreatedAt();
     }
+
 }
