@@ -5,6 +5,7 @@ import com.sparta.todocard.dto.CommentRequestDto;
 import com.sparta.todocard.dto.CommentResponseDto;
 import com.sparta.todocard.entity.Card;
 import com.sparta.todocard.entity.Comment;
+import com.sparta.todocard.entity.User;
 import com.sparta.todocard.repository.CommentRepository;
 import com.sparta.todocard.repository.CardRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,14 +21,26 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
 
-    public CommentResponseDto addComment(CommentRequestDto requestDto, Card card) {
-        Comment comment = commentRepository.save(new Comment(requestDto, card));
+    public CommentResponseDto addComment(CommentRequestDto requestDto, Card card, User user) {
+        Comment comment = commentRepository.save(new Comment(requestDto, card, user));
         return new CommentResponseDto(comment);
     }
 
     public List<CommentResponseDto> getComment(Card card) {
         return commentRepository.findAllByCard(card).stream().map(CommentResponseDto::new).toList();
 
+    }
+
+    @Transactional
+    public CommentResponseDto updateComment(CommentRequestDto requestDto, Card card, Long commentId) {
+        List<Comment> commentList = commentRepository.findAllByCard(card);
+        for (Comment comment : commentList) {
+            if(comment.getId().equals(commentId)){
+                comment.update(requestDto);
+               return new CommentResponseDto(comment);
+            }
+        }
+        return null;
     }
 
     @Transactional
@@ -39,6 +52,11 @@ public class CommentService {
             }
         }
         return commentId;
+    }
+
+    public Comment findComment(Long id) {
+        return commentRepository.findById(id).orElseThrow(
+                () -> new NullPointerException("no " + id));
     }
 
 //    private Comment findComment(Card card, Long id){

@@ -4,6 +4,7 @@ package com.sparta.todocard.service;
 import com.sparta.todocard.dto.CardRequestDto;
 import com.sparta.todocard.dto.CardResponseDto;
 import com.sparta.todocard.entity.Card;
+import com.sparta.todocard.entity.User;
 import com.sparta.todocard.repository.CardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,8 @@ public class CardService {
     private final CardRepository cardRepository;
 
 
-    public CardResponseDto createCard(CardRequestDto requestDto) {
-        Card card = cardRepository.save(new Card(requestDto));
+    public CardResponseDto createCard(CardRequestDto requestDto, User user) {
+        Card card = cardRepository.save(new Card(requestDto, user));
 
         return new CardResponseDto(card);
     }
@@ -35,11 +36,6 @@ public class CardService {
     }
 
 
-    public Card findCard(Long id){
-        return cardRepository.findById(id).orElseThrow(
-                () -> new NullPointerException("no " + id));
-    }
-
     @Transactional
     public CardResponseDto updateCard(Long id, CardRequestDto requestDto) {
         Card card = findCard(id);
@@ -52,5 +48,10 @@ public class CardService {
         Card card = findCard(id);
         cardRepository.delete(card);
         return id;
+    }
+
+    public Card findCard(Long id) {
+        return cardRepository.findById(id).orElseThrow(
+                () -> new NullPointerException("no " + id));
     }
 }

@@ -2,8 +2,11 @@ package com.sparta.todocard.controller;
 
 import com.sparta.todocard.dto.CardRequestDto;
 import com.sparta.todocard.dto.CardResponseDto;
+import com.sparta.todocard.entity.User;
+import com.sparta.todocard.security.UserDetailsImpl;
 import com.sparta.todocard.service.CardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +20,8 @@ public class CardController {
     private final CardService cardService;
 
     @PostMapping("/to-do")
-    public CardResponseDto createCard(@RequestBody CardRequestDto requestDto){
-        return cardService.createCard(requestDto);
+    public CardResponseDto createCard(@RequestBody CardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return cardService.createCard(requestDto, userDetails.getUser());
     }
 
     @GetMapping("/to-do")

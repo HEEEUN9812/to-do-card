@@ -25,16 +25,18 @@ public class Card extends Timestamped{
     @Column(name = "content", nullable = false)
     private String content;
 
+
     @OneToMany(mappedBy = "card")
     private List<Comment> commentList = new ArrayList<>();
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id", nullable = false)
-//    private User user;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    public Card(CardRequestDto requestDto) {
+    public Card(CardRequestDto requestDto, User user) {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
+        this.user = user;
     }
 
     public void update(CardRequestDto requestDto) {
