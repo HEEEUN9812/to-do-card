@@ -30,7 +30,7 @@ public class Card extends Timestamped {
     private User user;
 
     @Column(name = "complete", nullable = false)
-    private boolean complete;
+    private boolean complete = false;
 
     public Card(CardRequestDto requestDto, User user) {
         this.title = requestDto.getTitle();
@@ -38,15 +38,12 @@ public class Card extends Timestamped {
         this.user = user;
     }
 
-    public void update(CardRequestDto requestDto) {
-        if(requestDto.getTitle() != null){
-            this.title = requestDto.getTitle();
-        }
-        if(requestDto.getContent() != null){
-            this.content = requestDto.getContent();
-        }
-        if(!complete){
-            this.complete = requestDto.isComplete();
-        }
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
+    public void complete() {
+        this.complete = !this.complete;
     }
 }

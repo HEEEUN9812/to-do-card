@@ -13,7 +13,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Comment extends Timestamped{
+public class Comment extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

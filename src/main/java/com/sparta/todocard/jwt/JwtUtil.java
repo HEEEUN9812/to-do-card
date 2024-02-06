@@ -20,7 +20,7 @@ public class JwtUtil {
 
     public static final String BEARER_PREFIX = "Bearer ";
 
-    private final long TOKEN_TIME = 60*60*60*1000L;
+    private final long TOKEN_TIME = 60 * 60 * 60 * 1000L;
 
     @Value("${jwt.secret.key}")
 
@@ -30,11 +30,12 @@ public class JwtUtil {
 
 
     @PostConstruct
-    public void init(){
+    public void init() {
         byte[] bytes = Base64.getDecoder().decode(secretKey);
         key = Keys.hmacShaKeyFor(bytes);
     }
-    public String createToken(String username){
+
+    public String createToken(String username) {
         Date date = new Date();
 
         return BEARER_PREFIX +
@@ -46,31 +47,31 @@ public class JwtUtil {
                         .compact();
     }
 
-    public String getJwtFromHeader(HttpServletRequest request){
+    public String getJwtFromHeader(HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
-        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)){
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
             return bearerToken.substring(7);
         }
         return null;
     }
 
-    public boolean validateToken(String token){
-        try{
+    public boolean validateToken(String token) {
+        try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
-        }catch (SecurityException | MalformedJwtException | SignatureException e){
+        } catch (SecurityException | MalformedJwtException | SignatureException e) {
             log.error("Invalid JWT signature");
-        }catch (ExpiredJwtException e){
+        } catch (ExpiredJwtException e) {
             log.error("Expired JWT token");
-        }catch (UnsupportedJwtException e){
+        } catch (UnsupportedJwtException e) {
             log.error("Unsupported JWT token");
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             log.error("JWT claims is empty");
         }
         return false;
     }
 
-    public Claims getUserInfoFromToken(String token){
+    public Claims getUserInfoFromToken(String token) {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 }

@@ -13,8 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @Service
 public class CommentService {
@@ -29,32 +27,24 @@ public class CommentService {
 
     @Transactional
     public CommentResponseDto updateComment(CommentRequestDto requestDto, Card card, Long commentId, User user) {
-        verifyUser(user, card);
-        List<Comment> commentList = commentRepository.findAllByCard(card);
-        for (Comment comment : commentList) {
-            if (comment.getId().equals(commentId)) {
-                comment.update(requestDto);
-                return new CommentResponseDto(comment, card.getUser());
-            }
-        }
-        return null;
+        verifyUser(user, commentId);
+        Comment comment = commentRepository.findByCard_IdAndId(card.getId(), commentId).orElseThrow(() -> new NullPointerException("해당 댓글은 존재하지 않습니다."));
+        comment.update(requestDto);
+        return new CommentResponseDto(comment, user);
     }
 
     @Transactional
     public Long deleteComment(Card card, Long commentId, User user) {
-        verifyUser(user, card);
-        List<Comment> commentList = commentRepository.findAllByCard(card);
-        for (Comment comment : commentList) {
-            if (comment.getId().equals(commentId)) {
-                commentRepository.delete(comment);
-            }
-        }
+        verifyUser(user, commentId);
+        Comment comment = commentRepository.findByCard_IdAndId(card.getId(), commentId).orElseThrow(() -> new NullPointerException("해당 댓글은 존재하지 않습니다."));
+        commentRepository.delete(comment);
         return commentId;
     }
 
-    public void verifyUser(User user, Card card){
-        if(!user.getId().equals(card.getUser().getId())){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"작성자만 삭제/수정 할 수 있음");
+    public void verifyUser(User user, Long id) {
+        Comment comment = commentRepository.findById(id).orElseThrow(() -> new NullPointerException("해당 댓글이 존재하지 않습니다."));
+        if (!user.getId().equals(comment.getUser().getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "작성자만 삭제/수정 할 수 있음");
         }
     }
 

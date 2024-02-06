@@ -20,32 +20,33 @@ public class CardController {
     private final CardService cardService;
 
     @PostMapping("/to-do")
-    public CardResponseDto createCard(@RequestBody CardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public CardResponseDto createCard(@RequestBody CardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return cardService.createCard(requestDto, userDetails.getUser());
     }
 
     @GetMapping("/to-do")
-    public List<CardCommentResponseDto> getCardList(){
+    public List<CardCommentResponseDto> getCardList() {
         return cardService.getCardList();
     }
 
     @GetMapping("/to-do/{id}")
-    public CardCommentResponseDto getCard(@PathVariable Long id){
+    public CardCommentResponseDto getCard(@PathVariable Long id) {
         return cardService.getCard(id);
     }
 
-    @PatchMapping("/to-do/{id}")
-    public CardResponseDto updateCard(@PathVariable Long id, @RequestBody CardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        return cardService.updateCard(id, requestDto,userDetails.getUser());
+    @PutMapping("/to-do/{id}")
+    public CardResponseDto updateCard(@PathVariable Long id, @RequestBody CardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return cardService.updateCard(id, requestDto, userDetails.getUser());
     }
 
-//    @PatchMapping("/to-do/{id}")
-//    public CardResponseDto completeCard(@PathVariable Long id, @RequestBody CardCompleteRequestDto requestDto){
-//        return cardService.completeCard(id, requestDto);
-//    }
+    @PatchMapping("/to-do/{id}")
+    public CardResponseDto complete(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return cardService.complete(id, userDetails.getUser());
+    }
+
     @DeleteMapping("/to-do/{id}")
-    public Long deleteCard(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        return cardService.deleteCard(id,userDetails.getUser());
+    public Long deleteCard(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return cardService.deleteCard(id, userDetails.getUser());
     }
 
 }

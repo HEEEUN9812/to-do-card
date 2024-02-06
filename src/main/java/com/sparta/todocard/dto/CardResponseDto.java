@@ -19,7 +19,6 @@ public class CardResponseDto {
     private boolean complete;
 
 
-
     public CardResponseDto(Card card, User user) {
         this.id = card.getId();
         this.title = card.getTitle();

@@ -9,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/to-do")
 @RequiredArgsConstructor
@@ -21,17 +19,17 @@ public class CommentController {
 
 
     @PostMapping("/{id}/comment")
-    public CommentResponseDto addComment(@RequestBody CommentRequestDto requestDto, Card card, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public CommentResponseDto addComment(@RequestBody CommentRequestDto requestDto, Card card, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return commentService.addComment(requestDto, card, userDetails.getUser());
     }
 
     @PutMapping("/{id}/comment/{commentId}")
-    public CommentResponseDto updateComment(@PathVariable Long commentId ,@RequestBody CommentRequestDto requestDto, Card card, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public CommentResponseDto updateComment(@PathVariable Long commentId, @RequestBody CommentRequestDto requestDto, Card card, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return commentService.updateComment(requestDto, card, commentId, userDetails.getUser());
     }
 
     @DeleteMapping("/{id}/comment/{commentId}")
-    public Long deleteComment(Card card, @PathVariable Long commentId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public Long deleteComment(Card card, @PathVariable Long commentId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return commentService.deleteComment(card, commentId, userDetails.getUser());
     }
 }
