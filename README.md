@@ -9,4 +9,4 @@
 
 
 
-* ### [API 명세서(링크)]([[https://fog-diadem-677.notion.site/9c9d7d780bbf42ec81bec1bb97084e97?v=c26ee96ed261499eb6a2099eb0995477](https://fog-diadem-677.notion.site/dbc77a8b75b048638493358c5f215074?v=b184171db0da42159e83d4c91edb000e&pvs=4)https://fog-diadem-677.notion.site/dbc77a8b75b048638493358c5f215074?v=b184171db0da42159e83d4c91edb000e&pvs=4](https://fog-diadem-677.notion.site/dbc77a8b75b048638493358c5f215074?v=b184171db0da42159e83d4c91edb000e)https://fog-diadem-677.notion.site/dbc77a8b75b048638493358c5f215074?v=b184171db0da42159e83d4c91edb000e)
+* ### [API 명세서(링크)](https://fog-diadem-677.notion.site/dbc77a8b75b048638493358c5f215074?v=b184171db0da42159e83d4c91edb000e&pvs=4)
