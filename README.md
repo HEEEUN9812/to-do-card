@@ -3,8 +3,8 @@
 
 
 * ### ERD
-
-![스크린샷 2024-01-23 오전 11 30 52](https://github.com/HEEEUN9812/schedule_app/assets/154495684/2a810d68-caad-4860-a8d7-f8f9d7212265)
+  
+![to-do](https://github.com/HEEEUN9812/to-do-card/assets/154495684/8d45c8c9-2a10-440a-a18c-894a637b25ef)
 
 
 
