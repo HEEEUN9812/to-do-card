@@ -26,12 +26,12 @@ public class CommentController {
     }
 
     @PutMapping("/{id}/comment/{commentId}")
-    public CommentResponseDto updateComment(@PathVariable Long commentId ,@RequestBody CommentRequestDto requestDto, Card card){
-        return commentService.updateComment(requestDto, card, commentId);
+    public CommentResponseDto updateComment(@PathVariable Long commentId ,@RequestBody CommentRequestDto requestDto, Card card, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return commentService.updateComment(requestDto, card, commentId, userDetails.getUser());
     }
 
     @DeleteMapping("/{id}/comment/{commentId}")
-    public Long deleteComment(Card card, @PathVariable Long commentId){
-        return commentService.deleteComment(card, commentId);
+    public Long deleteComment(Card card, @PathVariable Long commentId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return commentService.deleteComment(card, commentId, userDetails.getUser());
     }
 }

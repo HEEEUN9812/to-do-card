@@ -7,8 +7,12 @@ import com.sparta.todocard.entity.User;
 import com.sparta.todocard.repository.CardRepository;
 import com.sparta.todocard.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -40,6 +44,7 @@ public class CardService {
     @Transactional
     public CardResponseDto updateCard(Long id, CardRequestDto requestDto, User user) {
         Card card = findCard(id);
+        verifyUser(user, card);
         card.update(requestDto);
         return new CardResponseDto(card, user);
     }
@@ -47,6 +52,7 @@ public class CardService {
     @Transactional
     public Long deleteCard(Long id, User user) {
         Card card = findCard(id);
+        verifyUser(user, card);
         cardRepository.delete(card);
         return id;
     }
@@ -56,10 +62,10 @@ public class CardService {
         return cardRepository.findById(id).orElseThrow(
                 () -> new NullPointerException("no " + id));
     }
-    //    @Transactional
-//    public CardResponseDto completeCard(Long id, CardCompleteRequestDto requestDto) {
-//        Card card = findCard(id);
-//        card.complete(requestDto);
-//        return new CardResponseDto(card, card.getUser());
-//    }
+
+    public void verifyUser(User user, Card card){
+        if(!user.getId().equals(card.getUser().getId())){
+          throw new ResponseStatusException(HttpStatus.FORBIDDEN,"작성자만 삭제/수정 할 수 있음");
+        }
+    }
 }

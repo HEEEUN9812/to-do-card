@@ -8,8 +8,10 @@ import com.sparta.todocard.entity.Comment;
 import com.sparta.todocard.entity.User;
 import com.sparta.todocard.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -26,7 +28,8 @@ public class CommentService {
     }
 
     @Transactional
-    public CommentResponseDto updateComment(CommentRequestDto requestDto, Card card, Long commentId) {
+    public CommentResponseDto updateComment(CommentRequestDto requestDto, Card card, Long commentId, User user) {
+        verifyUser(user, card);
         List<Comment> commentList = commentRepository.findAllByCard(card);
         for (Comment comment : commentList) {
             if (comment.getId().equals(commentId)) {
@@ -38,7 +41,8 @@ public class CommentService {
     }
 
     @Transactional
-    public Long deleteComment(Card card, Long commentId) {
+    public Long deleteComment(Card card, Long commentId, User user) {
+        verifyUser(user, card);
         List<Comment> commentList = commentRepository.findAllByCard(card);
         for (Comment comment : commentList) {
             if (comment.getId().equals(commentId)) {
@@ -48,17 +52,10 @@ public class CommentService {
         return commentId;
     }
 
-    public Comment findComment(Long id) {
-        return commentRepository.findById(id).orElseThrow(
-                () -> new NullPointerException("no " + id));
+    public void verifyUser(User user, Card card){
+        if(!user.getId().equals(card.getUser().getId())){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"작성자만 삭제/수정 할 수 있음");
+        }
     }
 
-//    private Comment findComment(Card card, Long id){
-//        try{
-//         return commentRepository.deleteByCardAndId(card, id);
-//        }
-//        catch (Exception e){
-//         new NullPointerException("no" + id);
-//        }
-//    }
 }

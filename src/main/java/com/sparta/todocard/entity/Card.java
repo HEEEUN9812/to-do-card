@@ -30,7 +30,7 @@ public class Card extends Timestamped {
     private User user;
 
     @Column(name = "complete", nullable = false)
-    private boolean complete = false;
+    private boolean complete;
 
     public Card(CardRequestDto requestDto, User user) {
         this.title = requestDto.getTitle();
