@@ -10,6 +10,6 @@ import java.util.Optional;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> findAllByCard(Card card);
 
-    Optional<Comment> findByCard_IdAndId(Long id, Long commentId);
+    Optional<Comment> findByCardIdAndId(Long id, Long commentId);
 
 }

@@ -20,11 +20,11 @@ public class CardCommentResponseDto {
     private LocalDateTime createdAt;
     private List<CommentResponseDto> commentList;
 
-    public CardCommentResponseDto(Card card, User user, List<CommentResponseDto> commentList) {
+    public CardCommentResponseDto(Card card, List<CommentResponseDto> commentList) {
         this.id = card.getId();
         this.title = card.getTitle();
         this.content = card.getContent();
-        this.username = user.getUsername();
+        this.username = card.getUser().getUsername();
         this.createdAt = card.getCreatedAt();
         this.commentList = commentList;
     }

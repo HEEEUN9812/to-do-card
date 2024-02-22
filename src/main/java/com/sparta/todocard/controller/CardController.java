@@ -14,37 +14,36 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api")
 public class CardController {
 
     private final CardService cardService;
 
-    @PostMapping("/to-do")
+    @PostMapping("/todo")
     public CardResponseDto createCard(@RequestBody CardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return cardService.createCard(requestDto, userDetails.getUser());
     }
 
-    @GetMapping("/to-do")
+    @GetMapping("/todo")
     public List<CardCommentResponseDto> getCardList() {
         return cardService.getCardList();
     }
 
-    @GetMapping("/to-do/{id}")
+    @GetMapping("/todo/{id}")
     public CardCommentResponseDto getCard(@PathVariable Long id) {
         return cardService.getCard(id);
     }
 
-    @PutMapping("/to-do/{id}")
+    @PutMapping("/todo/{id}")
     public CardResponseDto updateCard(@PathVariable Long id, @RequestBody CardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return cardService.updateCard(id, requestDto, userDetails.getUser());
     }
 
-    @PatchMapping("/to-do/{id}")
+    @PatchMapping("/todo/{id}")
     public CardResponseDto complete(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return cardService.complete(id, userDetails.getUser());
     }
 
-    @DeleteMapping("/to-do/{id}")
+    @DeleteMapping("/todo/{id}")
     public Long deleteCard(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return cardService.deleteCard(id, userDetails.getUser());
     }

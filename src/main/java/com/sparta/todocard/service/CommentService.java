@@ -26,9 +26,11 @@ public class CommentService {
     }
 
     @Transactional
-    public CommentResponseDto updateComment(CommentRequestDto requestDto, Card card, Long commentId, User user) {
+    public CommentResponseDto updateComment(CommentRequestDto requestDto, Card card, Long commentId,
+        User user) {
         verifyUser(user, commentId);
-        Comment comment = commentRepository.findByCard_IdAndId(card.getId(), commentId).orElseThrow(() -> new NullPointerException("해당 댓글은 존재하지 않습니다."));
+        Comment comment = commentRepository.findByCardIdAndId(card.getId(), commentId)
+            .orElseThrow(() -> new NullPointerException("해당 댓글은 존재하지 않습니다."));
         comment.update(requestDto);
         return new CommentResponseDto(comment, user);
     }
@@ -36,13 +38,15 @@ public class CommentService {
     @Transactional
     public Long deleteComment(Card card, Long commentId, User user) {
         verifyUser(user, commentId);
-        Comment comment = commentRepository.findByCard_IdAndId(card.getId(), commentId).orElseThrow(() -> new NullPointerException("해당 댓글은 존재하지 않습니다."));
+        Comment comment = commentRepository.findByCardIdAndId(card.getId(), commentId)
+            .orElseThrow(() -> new NullPointerException("해당 댓글은 존재하지 않습니다."));
         commentRepository.delete(comment);
         return commentId;
     }
 
     public void verifyUser(User user, Long id) {
-        Comment comment = commentRepository.findById(id).orElseThrow(() -> new NullPointerException("해당 댓글이 존재하지 않습니다."));
+        Comment comment = commentRepository.findById(id)
+            .orElseThrow(() -> new NullPointerException("해당 댓글이 존재하지 않습니다."));
         if (!user.getId().equals(comment.getUser().getId())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "작성자만 삭제/수정 할 수 있음");
         }
