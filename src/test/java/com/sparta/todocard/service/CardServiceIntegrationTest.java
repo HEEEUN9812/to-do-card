@@ -2,7 +2,6 @@ package com.sparta.todocard.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.sparta.todocard.dto.CardCommentResponseDto;
 import com.sparta.todocard.dto.CardRequestDto;
@@ -11,7 +10,7 @@ import com.sparta.todocard.entity.User;
 import com.sparta.todocard.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -57,7 +56,7 @@ public class CardServiceIntegrationTest {
     void test2() {
         //given
         Long cardId = this.cardResponseDto.getId();
-        CardRequestDto cardRequestDto =  new CardRequestDto("title 수정", "content 수정");
+        CardRequestDto cardRequestDto = new CardRequestDto("title 수정", "content 수정");
 
         //when
         cardResponseDto = cardService.updateCard(cardId, cardRequestDto, user);
@@ -71,7 +70,7 @@ public class CardServiceIntegrationTest {
     @Test
     @Order(3)
     @DisplayName("생성한 todo 카드 조회")
-    void test3(){
+    void test3() {
         //given
         Long cardId = cardResponseDto.getId();
 
@@ -81,14 +80,14 @@ public class CardServiceIntegrationTest {
         //then
         assertEquals(this.cardResponseDto.getId(), cardCommentResponseDto.getId());
         assertEquals(this.cardResponseDto.getTitle(), cardCommentResponseDto.getTitle());
-        assertEquals(this.cardResponseDto.getContent(),cardCommentResponseDto.getContent());
+        assertEquals(this.cardResponseDto.getContent(), cardCommentResponseDto.getContent());
 
     }
 
     @Test
     @Order(4)
     @DisplayName("생성한 todo 카드 삭제")
-    void test4(){
+    void test4() {
         //given
         Long cardId = cardResponseDto.getId();
 

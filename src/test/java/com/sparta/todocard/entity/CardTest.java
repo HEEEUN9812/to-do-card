@@ -2,26 +2,26 @@ package com.sparta.todocard.entity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class CardTest {
 
     Card card = new Card();
+
     @Test
     @DisplayName("Card 업데이트")
-    void update(){
+    void update() {
         //given
         String title = "title1";
         String content = "content1";
 
         //when
-        card.update(title,content);
+        card.update(title, content);
 
         //then
-        assertEquals(title,card.getTitle());
-        assertEquals(content,card.getContent());
+        assertEquals(title, card.getTitle());
+        assertEquals(content, card.getContent());
 
     }
 
@@ -35,6 +35,6 @@ class CardTest {
         card.complete();
 
         //then
-        assertEquals(!complete,card.isComplete());
+        assertEquals(!complete, card.isComplete());
     }
 }
