@@ -6,19 +6,15 @@ import com.sparta.todocard.dto.CardRequestDto;
 import com.sparta.todocard.dto.CardResponseDto;
 import com.sparta.todocard.dto.CommentResponseDto;
 import com.sparta.todocard.entity.Card;
-import com.sparta.todocard.entity.Comment;
 import com.sparta.todocard.entity.User;
 import com.sparta.todocard.repository.CardRepository;
 import com.sparta.todocard.repository.CommentRepository;
-import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.Comments;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -35,7 +31,9 @@ public class CardService {
     }
 
     public List<CardCommentResponseDto> getCardList() {
-        return cardRepository.findAll().stream().map(e -> new CardCommentResponseDto(e, commentRepository.findAllByCard(e).stream().map(f -> new CommentResponseDto(f, f.getUser())).toList())).toList();
+        return cardRepository.findAll().stream().map(e -> new CardCommentResponseDto(e,
+            commentRepository.findAllByCard(e).stream()
+                .map(f -> new CommentResponseDto(f, f.getUser())).toList())).toList();
     }
 
     public CardCommentResponseDto getCard(Long id) {

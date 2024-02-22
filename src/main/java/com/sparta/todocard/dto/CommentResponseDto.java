@@ -2,14 +2,14 @@ package com.sparta.todocard.dto;
 
 import com.sparta.todocard.entity.Comment;
 import com.sparta.todocard.entity.User;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
 public class CommentResponseDto {
+
     private Long id;
     private String content;
     private Long card_id;

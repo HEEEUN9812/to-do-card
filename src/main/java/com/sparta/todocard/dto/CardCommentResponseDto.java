@@ -1,12 +1,10 @@
 package com.sparta.todocard.dto;
 
 import com.sparta.todocard.entity.Card;
-import com.sparta.todocard.entity.User;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 
 @Getter

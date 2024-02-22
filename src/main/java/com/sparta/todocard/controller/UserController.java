@@ -4,6 +4,7 @@ package com.sparta.todocard.controller;
 import com.sparta.todocard.dto.SignupRequestDto;
 import com.sparta.todocard.service.UserService;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
@@ -25,7 +24,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity signup(@Valid @RequestBody SignupRequestDto requestDto, BindingResult bindingResult) {
+    public ResponseEntity signup(@Valid @RequestBody SignupRequestDto requestDto,
+        BindingResult bindingResult) {
         log.info(requestDto.getUsername());
         // Validation 예외처리
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
