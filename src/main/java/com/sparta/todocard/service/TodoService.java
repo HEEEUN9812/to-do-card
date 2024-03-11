@@ -32,21 +32,21 @@ public class TodoService {
 
     public List<TodoCommentResponseDto> getTodoList() {
         return todoRepository.findAll().stream().map(e -> new TodoCommentResponseDto(e,
-            commentRepository.findAllByCard(e).stream()
-                .map(f -> new CommentResponseDto(f, f.getUser())).toList())).toList();
+            commentRepository.findAllByTodo(e).stream()
+                .map(f -> new CommentResponseDto()).toList())).toList();
     }
 
     public TodoCommentResponseDto getTodo(Long id) {
-        Todo todo = findCard(id);
-        List<CommentResponseDto> commentList = commentRepository.findAllByCard(todo).stream()
-            .map(e -> new CommentResponseDto(e, e.getUser())).toList();
+        Todo todo = findTodo(id);
+        List<CommentResponseDto> commentList = commentRepository.findAllByTodo(todo).stream()
+            .map(e -> new CommentResponseDto()).toList();
         return new TodoCommentResponseDto(todo, commentList);
     }
 
 
     @Transactional
     public TodoResponseDto updateCard(Long id, TodoRequestDto requestDto, User user) {
-        Todo todo = findCard(id);
+        Todo todo = findTodo(id);
         verifyUser(user, todo);
         todo.update(requestDto.getTitle(), requestDto.getContent());
         return new TodoResponseDto(todo, user);
@@ -54,7 +54,7 @@ public class TodoService {
 
     @Transactional
     public Long deleteCard(Long id, User user) {
-        Todo todo = findCard(id);
+        Todo todo = findTodo(id);
         verifyUser(user, todo);
         todoRepository.delete(todo);
         return id;
@@ -62,13 +62,13 @@ public class TodoService {
 
     @Transactional
     public TodoResponseDto completeTodo(Long id, User user) {
-        Todo todo = findCard(id);
+        Todo todo = findTodo(id);
         todo.complete();
         return new TodoResponseDto(todo, user);
     }
 
 
-    public Todo findCard(Long id) {
+    public Todo findTodo(Long id) {
         return todoRepository.findById(id).orElseThrow(
             () -> new NullPointerException("no " + id));
     }
