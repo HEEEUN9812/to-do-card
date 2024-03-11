@@ -1,6 +1,6 @@
 package com.sparta.todocard.entity;
 
-import com.sparta.todocard.dto.CardRequestDto;
+import com.sparta.todocard.dto.TodoRequestDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,9 +18,9 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Getter
 @Setter
-@Table(name = "to-do card")
+@Table(name = "TB_TODO")
 @NoArgsConstructor
-public class Card extends Timestamped {
+public class Todo extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +40,7 @@ public class Card extends Timestamped {
     @Column(name = "complete", nullable = false)
     private boolean complete = false;
 
-    public Card(CardRequestDto requestDto, User user) {
+    public Todo(TodoRequestDto requestDto, User user) {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
         this.user = user;

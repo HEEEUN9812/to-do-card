@@ -20,7 +20,7 @@ public class CommentResponseDto {
     public CommentResponseDto(Comment comment, User user) {
         this.id = comment.getId();
         this.content = comment.getContent();
-        this.card_id = comment.getCard().getId();
+        this.card_id = comment.getTodo().getId();
         this.username = user.getUsername();
         this.createdAt = comment.getCreatedAt();
     }

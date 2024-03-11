@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +20,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "TB_COMMENT")
 public class Comment extends Timestamped {
 
     @Id
@@ -31,15 +33,15 @@ public class Comment extends Timestamped {
     @ManyToOne
     @JoinColumn(name = "card_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Card card;
+    private Todo todo;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Comment(CommentRequestDto requestDto, Card card, User user) {
+    public Comment(CommentRequestDto requestDto, Todo todo, User user) {
         this.content = requestDto.getContent();
-        this.card = card;
+        this.todo = todo;
         this.user = user;
     }
 

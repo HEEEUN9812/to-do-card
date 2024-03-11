@@ -3,7 +3,7 @@ package com.sparta.todocard.service;
 
 import com.sparta.todocard.dto.CommentRequestDto;
 import com.sparta.todocard.dto.CommentResponseDto;
-import com.sparta.todocard.entity.Card;
+import com.sparta.todocard.entity.Todo;
 import com.sparta.todocard.entity.Comment;
 import com.sparta.todocard.entity.User;
 import com.sparta.todocard.repository.CommentRepository;
@@ -20,25 +20,25 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
 
-    public CommentResponseDto addComment(CommentRequestDto requestDto, Card card, User user) {
-        Comment comment = commentRepository.save(new Comment(requestDto, card, user));
+    public CommentResponseDto addComment(CommentRequestDto requestDto, Todo todo, User user) {
+        Comment comment = commentRepository.save(new Comment(requestDto, todo, user));
         return new CommentResponseDto(comment, user);
     }
 
     @Transactional
-    public CommentResponseDto updateComment(CommentRequestDto requestDto, Card card, Long commentId,
+    public CommentResponseDto updateComment(CommentRequestDto requestDto, Todo todo, Long commentId,
         User user) {
         verifyUser(user, commentId);
-        Comment comment = commentRepository.findByCardIdAndId(card.getId(), commentId)
+        Comment comment = commentRepository.findByCardIdAndId(todo.getId(), commentId)
             .orElseThrow(() -> new NullPointerException("해당 댓글은 존재하지 않습니다."));
         comment.update(requestDto);
         return new CommentResponseDto(comment, user);
     }
 
     @Transactional
-    public Long deleteComment(Card card, Long commentId, User user) {
+    public Long deleteComment(Todo todo, Long commentId, User user) {
         verifyUser(user, commentId);
-        Comment comment = commentRepository.findByCardIdAndId(card.getId(), commentId)
+        Comment comment = commentRepository.findByCardIdAndId(todo.getId(), commentId)
             .orElseThrow(() -> new NullPointerException("해당 댓글은 존재하지 않습니다."));
         commentRepository.delete(comment);
         return commentId;

@@ -1,6 +1,6 @@
 package com.sparta.todocard.dto;
 
-import com.sparta.todocard.entity.Card;
+import com.sparta.todocard.entity.Todo;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class CardCommentResponseDto {
+public class TodoCommentResponseDto {
 
     private Long id;
     private String title;
@@ -18,12 +18,12 @@ public class CardCommentResponseDto {
     private LocalDateTime createdAt;
     private List<CommentResponseDto> commentList;
 
-    public CardCommentResponseDto(Card card, List<CommentResponseDto> commentList) {
-        this.id = card.getId();
-        this.title = card.getTitle();
-        this.content = card.getContent();
-        this.username = card.getUser().getUsername();
-        this.createdAt = card.getCreatedAt();
+    public TodoCommentResponseDto(Todo todo, List<CommentResponseDto> commentList) {
+        this.id = todo.getId();
+        this.title = todo.getTitle();
+        this.content = todo.getContent();
+        this.username = todo.getUser().getUsername();
+        this.createdAt = todo.getCreatedAt();
         this.commentList = commentList;
     }
 }
