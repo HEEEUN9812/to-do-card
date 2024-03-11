@@ -18,27 +18,28 @@ import org.springframework.web.server.ResponseStatusException;
 public class CommentService {
 
     private final CommentRepository commentRepository;
+    private final TodoService todoService;
 
 
-    public CommentResponseDto addComment(CommentRequestDto requestDto, Todo todo, User user) {
+    public CommentResponseDto createComment(Long todoId, User user, CommentRequestDto requestDto) {
+        Todo todo = todoService.findTodo(todoId);
         Comment comment = commentRepository.save(new Comment(requestDto, todo, user));
-        return new CommentResponseDto(comment, user);
+        return new CommentResponseDto(comment);
     }
 
     @Transactional
-    public CommentResponseDto updateComment(CommentRequestDto requestDto, Todo todo, Long commentId,
-        User user) {
+    public CommentResponseDto updateComment(Long todoId, Long commentId, CommentRequestDto commentRequestDto, User user) {
         verifyUser(user, commentId);
-        Comment comment = commentRepository.findByCardIdAndId(todo.getId(), commentId)
+        Comment comment = commentRepository.findByTodoIdAndId(todoId, commentId)
             .orElseThrow(() -> new NullPointerException("해당 댓글은 존재하지 않습니다."));
-        comment.update(requestDto);
-        return new CommentResponseDto(comment, user);
+        comment.update(commentRequestDto);
+        return new CommentResponseDto(comment);
     }
 
     @Transactional
-    public Long deleteComment(Todo todo, Long commentId, User user) {
+    public Long deleteComment(Long todoId, Long commentId, User user) {
         verifyUser(user, commentId);
-        Comment comment = commentRepository.findByCardIdAndId(todo.getId(), commentId)
+        Comment comment = commentRepository.findByTodoIdAndId(todoId, commentId)
             .orElseThrow(() -> new NullPointerException("해당 댓글은 존재하지 않습니다."));
         commentRepository.delete(comment);
         return commentId;
@@ -51,5 +52,4 @@ public class CommentService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "작성자만 삭제/수정 할 수 있음");
         }
     }
-
 }

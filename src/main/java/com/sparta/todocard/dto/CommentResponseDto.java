@@ -17,11 +17,11 @@ public class CommentResponseDto {
     private LocalDateTime createdAt;
 
 
-    public CommentResponseDto(Comment comment, User user) {
+    public CommentResponseDto(Comment comment) {
         this.id = comment.getId();
         this.content = comment.getContent();
         this.card_id = comment.getTodo().getId();
-        this.username = user.getUsername();
+        this.username = comment.getUser().getUsername();
         this.createdAt = comment.getCreatedAt();
     }
 }
