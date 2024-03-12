@@ -1,5 +1,6 @@
 package com.sparta.todocard.global.exception;
 
+import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,20 @@ public class RestControllerAdvice {
     public ResponseEntity<String> handleUnhandledException(RuntimeException e) {
         log.error("처리되지 않은 예외 발생", e);
         return ResponseEntity.badRequest().body("Unhandled Exception");
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<ErrorResponse> handleValidationException(ValidationException e) {
+        log.error("인가 에러", e);
+        ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<ErrorResponse> handleNullPointerException(NullPointerException e) {
+        log.error("리소스가 존재하지 않음", e);
+        ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 }
 

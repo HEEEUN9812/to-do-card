@@ -9,6 +9,7 @@ import com.sparta.todocard.entity.Todo;
 import com.sparta.todocard.entity.User;
 import com.sparta.todocard.repository.TodoRepository;
 import com.sparta.todocard.repository.CommentRepository;
+import jakarta.validation.ValidationException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -47,7 +48,7 @@ public class TodoService {
     @Transactional
     public TodoResponseDto updateCard(Long id, TodoRequestDto requestDto, User user) {
         Todo todo = findTodo(id);
-        verifyUser(user, todo);
+        validateUser(user, todo);
         todo.update(requestDto.getTitle(), requestDto.getContent());
         return new TodoResponseDto(todo, user);
     }
@@ -55,7 +56,7 @@ public class TodoService {
     @Transactional
     public Long deleteCard(Long id, User user) {
         Todo todo = findTodo(id);
-        verifyUser(user, todo);
+        validateUser(user, todo);
         todoRepository.delete(todo);
         return id;
     }
@@ -70,12 +71,12 @@ public class TodoService {
 
     public Todo findTodo(Long id) {
         return todoRepository.findById(id).orElseThrow(
-            () -> new NullPointerException("no " + id));
+            () -> new NullPointerException("해당 게시물을 찾을 수 없습니다."));
     }
 
-    public void verifyUser(User user, Todo todo) {
+    public void validateUser(User user, Todo todo) {
         if (!user.getId().equals(todo.getUser().getId())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "작성자만 삭제/수정 할 수 있음");
+            throw new ValidationException("작성자만 수정/삭제 할 수 있습니다.");
         }
     }
 }
