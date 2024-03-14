@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Setter
 public class SignupRequestDto {
 
     @Size(min = 4, max = 10)
