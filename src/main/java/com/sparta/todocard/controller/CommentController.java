@@ -2,7 +2,7 @@ package com.sparta.todocard.controller;
 
 import com.sparta.todocard.dto.CommentRequestDto;
 import com.sparta.todocard.dto.CommentResponseDto;
-import com.sparta.todocard.security.UserDetailsImpl;
+import com.sparta.todocard.global.security.UserDetailsImpl;
 import com.sparta.todocard.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

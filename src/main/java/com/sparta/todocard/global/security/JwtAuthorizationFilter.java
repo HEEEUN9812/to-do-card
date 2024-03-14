@@ -1,6 +1,6 @@
-package com.sparta.todocard.security;
+package com.sparta.todocard.global.security;
 
-import com.sparta.todocard.jwt.JwtUtil;
+import com.sparta.todocard.global.jwt.JwtUtil;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

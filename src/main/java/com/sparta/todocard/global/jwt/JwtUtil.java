@@ -1,4 +1,4 @@
-package com.sparta.todocard.jwt;
+package com.sparta.todocard.global.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
