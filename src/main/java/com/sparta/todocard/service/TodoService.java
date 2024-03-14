@@ -1,30 +1,31 @@
 package com.sparta.todocard.service;
 
 
+import com.sparta.todocard.dto.CommentResponseDto;
 import com.sparta.todocard.dto.TodoCommentResponseDto;
 import com.sparta.todocard.dto.TodoRequestDto;
 import com.sparta.todocard.dto.TodoResponseDto;
-import com.sparta.todocard.dto.CommentResponseDto;
 import com.sparta.todocard.entity.Todo;
 import com.sparta.todocard.entity.User;
-import com.sparta.todocard.repository.TodoRepository;
 import com.sparta.todocard.repository.CommentRepository;
+import com.sparta.todocard.repository.TodoQueryRepository;
+import com.sparta.todocard.repository.TodoRepository;
 import jakarta.validation.ValidationException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 @RequiredArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class TodoService {
 
     private final TodoRepository todoRepository;
     private final CommentRepository commentRepository;
+    private final TodoQueryRepository todoQueryRepository;
 
-
+    @Transactional
     public TodoResponseDto createTodo(TodoRequestDto requestDto, User user) {
         Todo todo = todoRepository.save(new Todo(requestDto, user));
 
@@ -78,5 +79,12 @@ public class TodoService {
         if (!user.getId().equals(todo.getUser().getId())) {
             throw new ValidationException("작성자만 수정/삭제 할 수 있습니다.");
         }
+    }
+
+    public List<TodoCommentResponseDto> searchTodo(String keyword) {
+        List<Todo> todos = todoQueryRepository.findByKeyword(keyword);
+        return todos.stream().map(e -> new TodoCommentResponseDto(e,
+            commentRepository.findAllByTodo(e).stream()
+                .map(f -> new CommentResponseDto()).toList())).toList();
     }
 }

@@ -3,7 +3,7 @@ package com.sparta.todocard.controller;
 import com.sparta.todocard.dto.TodoCommentResponseDto;
 import com.sparta.todocard.dto.TodoRequestDto;
 import com.sparta.todocard.dto.TodoResponseDto;
-import com.sparta.todocard.security.UserDetailsImpl;
+import com.sparta.todocard.global.security.UserDetailsImpl;
 import com.sparta.todocard.service.TodoService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -45,6 +46,13 @@ public class TodoController {
     public ResponseEntity<TodoCommentResponseDto> getTodo(@PathVariable Long id) {
         TodoCommentResponseDto todoCommentResponseDto = todoService.getTodo(id);
         return ResponseEntity.status(HttpStatus.OK.value()).body(todoCommentResponseDto);
+    }
+
+    @GetMapping("/todos/search")
+    public ResponseEntity<List<TodoCommentResponseDto>> searchTodo(
+        @RequestParam String keyword){
+        List<TodoCommentResponseDto> todoCommentResponseDtos = todoService.searchTodo(keyword);
+        return ResponseEntity.status(HttpStatus.OK.value()).body(todoCommentResponseDtos);
     }
 
     @PutMapping("/todos/{id}")
