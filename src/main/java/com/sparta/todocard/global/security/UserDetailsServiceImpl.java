@@ -1,4 +1,4 @@
-package com.sparta.todocard.security;
+package com.sparta.todocard.global.security;
 
 import com.sparta.todocard.entity.User;
 import com.sparta.todocard.repository.UserRepository;

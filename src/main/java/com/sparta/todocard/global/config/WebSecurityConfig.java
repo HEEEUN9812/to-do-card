@@ -1,9 +1,9 @@
-package com.sparta.todocard.config;
+package com.sparta.todocard.global.config;
 
-import com.sparta.todocard.jwt.JwtUtil;
-import com.sparta.todocard.security.JwtAuthenticationFilter;
-import com.sparta.todocard.security.JwtAuthorizationFilter;
-import com.sparta.todocard.security.UserDetailsServiceImpl;
+import com.sparta.todocard.global.jwt.JwtUtil;
+import com.sparta.todocard.global.security.JwtAuthenticationFilter;
+import com.sparta.todocard.global.security.JwtAuthorizationFilter;
+import com.sparta.todocard.global.security.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -67,7 +67,7 @@ public class WebSecurityConfig {
                 .permitAll() // resources 접근 허용 설정
                 .requestMatchers("/api/user/**", "/error", "/auth/**")
                 .permitAll() // '/api/user/'로 시작하는 요청 모두 접근 허가
-                .requestMatchers(HttpMethod.GET, "/api/to-do/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/todos/**").permitAll()
                 .anyRequest().authenticated() // 그 외 모든 요청 인증처리
         );
 
