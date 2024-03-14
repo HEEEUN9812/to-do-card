@@ -35,13 +35,13 @@ public class TodoService {
     public List<TodoCommentResponseDto> getTodoList() {
         return todoRepository.findAll().stream().map(e -> new TodoCommentResponseDto(e,
             commentRepository.findAllByTodo(e).stream()
-                .map(f -> new CommentResponseDto()).toList())).toList();
+                .map(CommentResponseDto::new).toList())).toList();
     }
 
     public TodoCommentResponseDto getTodo(Long id) {
         Todo todo = findTodo(id);
         List<CommentResponseDto> commentList = commentRepository.findAllByTodo(todo).stream()
-            .map(e -> new CommentResponseDto()).toList();
+            .map(CommentResponseDto::new).toList();
         return new TodoCommentResponseDto(todo, commentList);
     }
 
