@@ -49,9 +49,11 @@ public class TodoController {
     }
 
     @GetMapping("/todos/search")
-    public ResponseEntity<List<TodoCommentResponseDto>> searchTodo(
-        @RequestParam String keyword){
-        List<TodoCommentResponseDto> todoCommentResponseDtos = todoService.searchTodo(keyword);
+    public ResponseEntity<List<TodoResponseDto>> searchTodo(
+        @RequestParam String keyword,
+        @RequestParam(required = false, defaultValue = "0", value = "page") int page,
+        @RequestParam(required = false, defaultValue = "10", value = "size") int size) {
+        List<TodoResponseDto> todoCommentResponseDtos = todoService.searchTodo(keyword, page, size );
         return ResponseEntity.status(HttpStatus.OK.value()).body(todoCommentResponseDtos);
     }
 

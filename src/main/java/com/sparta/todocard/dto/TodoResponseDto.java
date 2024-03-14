@@ -26,4 +26,13 @@ public class TodoResponseDto {
         this.createdAt = todo.getCreatedAt();
         this.complete = todo.isComplete();
     }
+
+    public TodoResponseDto(Todo todo) {
+        this.id = todo.getId();
+        this.title = todo.getTitle();
+        this.content = todo.getContent();
+        this.username = todo.getUser().getUsername();
+        this.createdAt = todo.getCreatedAt();
+        this.complete = todo.isComplete();
+    }
 }

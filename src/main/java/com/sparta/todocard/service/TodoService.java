@@ -13,6 +13,9 @@ import com.sparta.todocard.repository.TodoRepository;
 import jakarta.validation.ValidationException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -81,10 +84,12 @@ public class TodoService {
         }
     }
 
-    public List<TodoCommentResponseDto> searchTodo(String keyword) {
-        List<Todo> todos = todoQueryRepository.findByKeyword(keyword);
-        return todos.stream().map(e -> new TodoCommentResponseDto(e,
-            commentRepository.findAllByTodo(e).stream()
-                .map(f -> new CommentResponseDto()).toList())).toList();
+    public List<TodoResponseDto> searchTodo(String keyword, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<TodoResponseDto> todoResponseDtos = todoQueryRepository
+            .findByKeywordPageable(keyword, pageable)
+            .map(TodoResponseDto::new);
+
+        return todoResponseDtos.getContent();
     }
 }
