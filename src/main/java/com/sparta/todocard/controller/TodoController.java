@@ -4,7 +4,7 @@ import com.sparta.todocard.dto.TodoCommentResponseDto;
 import com.sparta.todocard.dto.TodoRequestDto;
 import com.sparta.todocard.dto.TodoResponseDto;
 import com.sparta.todocard.global.security.UserDetailsImpl;
-import com.sparta.todocard.service.TodoService;
+import com.sparta.todocard.service.TodoServiceImpl;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,26 +25,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TodoController {
 
-    private final TodoService todoService;
+    private final TodoServiceImpl todoServiceImpl;
 
     @PostMapping("/todos")
     public ResponseEntity<TodoResponseDto> createTodo(
         @RequestBody TodoRequestDto todoRequestDto,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        TodoResponseDto todoResponseDto = todoService.createTodo(todoRequestDto,
+        TodoResponseDto todoResponseDto = todoServiceImpl.createTodo(todoRequestDto,
             userDetails.getUser());
         return ResponseEntity.status(HttpStatus.CREATED.value()).body(todoResponseDto);
     }
 
     @GetMapping("/todos")
     public ResponseEntity<List<TodoCommentResponseDto>> getAllTodos() {
-        List<TodoCommentResponseDto> todoCommentResponseDtos = todoService.getTodoList();
+        List<TodoCommentResponseDto> todoCommentResponseDtos = todoServiceImpl.getTodoList();
         return ResponseEntity.status(HttpStatus.OK.value()).body(todoCommentResponseDtos);
     }
 
     @GetMapping("/todos/{id}")
     public ResponseEntity<TodoCommentResponseDto> getTodo(@PathVariable Long id) {
-        TodoCommentResponseDto todoCommentResponseDto = todoService.getTodo(id);
+        TodoCommentResponseDto todoCommentResponseDto = todoServiceImpl.getTodo(id);
         return ResponseEntity.status(HttpStatus.OK.value()).body(todoCommentResponseDto);
     }
 
@@ -53,7 +53,7 @@ public class TodoController {
         @RequestParam String keyword,
         @RequestParam(required = false, defaultValue = "0", value = "page") int page,
         @RequestParam(required = false, defaultValue = "10", value = "size") int size) {
-        List<TodoResponseDto> todoCommentResponseDtos = todoService.searchTodo(keyword, page, size );
+        List<TodoResponseDto> todoCommentResponseDtos = todoServiceImpl.searchTodo(keyword, page, size );
         return ResponseEntity.status(HttpStatus.OK.value()).body(todoCommentResponseDtos);
     }
 
@@ -62,7 +62,7 @@ public class TodoController {
         @PathVariable Long id,
         @RequestBody TodoRequestDto todoRequestDto,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        TodoResponseDto todoResponseDto = todoService.updateCard(id, todoRequestDto,
+        TodoResponseDto todoResponseDto = todoServiceImpl.updateCard(id, todoRequestDto,
             userDetails.getUser());
         return ResponseEntity.status(HttpStatus.OK.value()).body(todoResponseDto);
     }
@@ -71,7 +71,7 @@ public class TodoController {
     public ResponseEntity<TodoResponseDto> completeTodo(
         @PathVariable Long id,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        TodoResponseDto todoResponseDto = todoService.completeTodo(id, userDetails.getUser());
+        TodoResponseDto todoResponseDto = todoServiceImpl.completeTodo(id, userDetails.getUser());
         return ResponseEntity.status(HttpStatus.OK.value()).body(todoResponseDto);
     }
 
@@ -79,7 +79,7 @@ public class TodoController {
     public ResponseEntity<Long> deleteTodo(
         @PathVariable Long id,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        Long todoId = todoService.deleteCard(id, userDetails.getUser());
+        Long todoId = todoServiceImpl.deleteCard(id, userDetails.getUser());
         return ResponseEntity.status(HttpStatus.OK.value()).body(todoId);
     }
 }

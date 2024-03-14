@@ -3,7 +3,7 @@ package com.sparta.todocard.controller;
 import com.sparta.todocard.dto.CommentRequestDto;
 import com.sparta.todocard.dto.CommentResponseDto;
 import com.sparta.todocard.global.security.UserDetailsImpl;
-import com.sparta.todocard.service.CommentService;
+import com.sparta.todocard.service.CommentServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,14 +22,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommentController {
 
 
-    private final CommentService commentService;
+    private final CommentServiceImpl commentServiceImpl;
 
     @PostMapping("/{todoId}/comment")
     public ResponseEntity<CommentResponseDto> createComment(
         @PathVariable Long todoId,
         @AuthenticationPrincipal UserDetailsImpl userDetails,
         @RequestBody CommentRequestDto commentRequestDto) {
-        CommentResponseDto commentResponseDto = commentService.createComment(todoId,
+        CommentResponseDto commentResponseDto = commentServiceImpl.createComment(todoId,
             userDetails.getUser(), commentRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(commentResponseDto);
     }
@@ -40,7 +40,7 @@ public class CommentController {
         @PathVariable Long commentId,
         @AuthenticationPrincipal UserDetailsImpl userDetails,
         @RequestBody CommentRequestDto commentRequestDto) {
-        CommentResponseDto commentResponseDto = commentService.updateComment(todoId, commentId,
+        CommentResponseDto commentResponseDto = commentServiceImpl.updateComment(todoId, commentId,
             commentRequestDto, userDetails.getUser());
         return ResponseEntity.status(HttpStatus.OK).body(commentResponseDto);
     }
@@ -50,7 +50,7 @@ public class CommentController {
         @PathVariable Long todoId,
         @PathVariable Long commentId,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        Long id = commentService.deleteComment(todoId, commentId, userDetails.getUser());
+        Long id = commentServiceImpl.deleteComment(todoId, commentId, userDetails.getUser());
         return ResponseEntity.status(HttpStatus.OK).body(commentId);
     }
 }
