@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class CardTest {
+class TodoTest {
 
-    Card card = new Card();
+    Todo todo = new Todo();
 
     @Test
     @DisplayName("Card 업데이트")
@@ -17,11 +17,11 @@ class CardTest {
         String content = "content1";
 
         //when
-        card.update(title, content);
+        todo.update(title, content);
 
         //then
-        assertEquals(title, card.getTitle());
-        assertEquals(content, card.getContent());
+        assertEquals(title, todo.getTitle());
+        assertEquals(content, todo.getContent());
 
     }
 
@@ -32,9 +32,9 @@ class CardTest {
         boolean complete = false;
 
         //when
-        card.complete();
+        todo.complete();
 
         //then
-        assertEquals(!complete, card.isComplete());
+        assertEquals(!complete, todo.isComplete());
     }
 }
