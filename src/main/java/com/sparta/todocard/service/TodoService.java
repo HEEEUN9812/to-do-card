@@ -5,6 +5,7 @@ import com.sparta.todocard.dto.TodoRequestDto;
 import com.sparta.todocard.dto.TodoResponseDto;
 import com.sparta.todocard.entity.User;
 import java.util.List;
+import org.springframework.data.domain.Pageable;
 
 public interface TodoService {
 
@@ -14,7 +15,7 @@ public interface TodoService {
 
     TodoCommentResponseDto getTodo(Long id);
 
-    List<TodoResponseDto> searchTodo(String keyword, int page, int size);
+    List<TodoResponseDto> searchTodo(String keyword, Pageable pageable);
 
     TodoResponseDto updateCard(Long id, TodoRequestDto requestDto, User user);
 

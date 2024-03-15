@@ -8,6 +8,7 @@ import com.sparta.todocard.global.security.UserDetailsImpl;
 import com.sparta.todocard.service.TodoServiceImpl;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -55,9 +56,9 @@ public class TodoController {
     @GetMapping("/todos/search")
     public ResponseEntity<List<TodoResponseDto>> searchTodo(
         @RequestParam String keyword,
-        @RequestParam(required = false, defaultValue = "0", value = "page") int page,
-        @RequestParam(required = false, defaultValue = "10", value = "size") int size) {
-        List<TodoResponseDto> todoCommentResponseDtos = todoServiceImpl.searchTodo(keyword, page, size );
+        Pageable pageable
+    ) {
+        List<TodoResponseDto> todoCommentResponseDtos = todoServiceImpl.searchTodo(keyword, pageable);
         return ResponseEntity.status(HttpStatus.OK.value()).body(todoCommentResponseDtos);
     }
 
