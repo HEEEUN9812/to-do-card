@@ -29,7 +29,7 @@ public class TodoQueryRepository {
             )
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
-            .orderBy(todo.createdAt.desc())
+            .orderBy(todo.complete.asc(), todo.createdAt.desc())
             .fetch();
 
         Long totalSize = jpaQueryFactory

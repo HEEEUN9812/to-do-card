@@ -16,6 +16,7 @@ public class TodoCommentResponseDto {
     private String content;
     private String username;
     private LocalDateTime createdAt;
+    private boolean complete;
     private List<CommentResponseDto> commentList;
 
     public TodoCommentResponseDto(Todo todo, List<CommentResponseDto> commentList) {
@@ -24,6 +25,7 @@ public class TodoCommentResponseDto {
         this.content = todo.getContent();
         this.username = todo.getUser().getUsername();
         this.createdAt = todo.getCreatedAt();
+        this.complete = todo.isComplete();
         this.commentList = commentList;
     }
 }

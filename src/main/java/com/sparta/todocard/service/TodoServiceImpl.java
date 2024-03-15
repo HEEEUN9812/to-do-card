@@ -36,7 +36,7 @@ public class TodoServiceImpl implements TodoService{
     }
 
     public List<TodoCommentResponseDto> getTodoList() {
-        return todoRepository.findAll().stream().map(e -> new TodoCommentResponseDto(e,
+        return todoRepository.findAllByOrderByCompleteAscCreatedAtDesc().stream().map(e -> new TodoCommentResponseDto(e,
             commentRepository.findAllByTodo(e).stream()
                 .map(CommentResponseDto::new).toList())).toList();
     }
