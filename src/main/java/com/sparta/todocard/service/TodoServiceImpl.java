@@ -51,11 +51,10 @@ public class TodoServiceImpl implements TodoService{
 
     public List<TodoResponseDto> searchTodo(String keyword, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<TodoResponseDto> todoResponseDtos = todoQueryRepository
-            .findByKeywordPageable(keyword, pageable)
-            .map(TodoResponseDto::new);
 
-        return todoResponseDtos.getContent();
+        return todoQueryRepository
+            .findByKeywordPageable(keyword, pageable)
+            .map(TodoResponseDto::new).getContent();
     }
 
     @Transactional
