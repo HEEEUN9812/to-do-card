@@ -3,6 +3,7 @@ package com.sparta.todocard.controller;
 import com.sparta.todocard.dto.TodoCommentResponseDto;
 import com.sparta.todocard.dto.TodoRequestDto;
 import com.sparta.todocard.dto.TodoResponseDto;
+import com.sparta.todocard.global.aop.PerfLogging;
 import com.sparta.todocard.global.security.UserDetailsImpl;
 import com.sparta.todocard.service.TodoServiceImpl;
 import java.util.List;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -23,6 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
+@PerfLogging
+@Component
 public class TodoController {
 
     private final TodoServiceImpl todoServiceImpl;

@@ -2,12 +2,14 @@ package com.sparta.todocard.controller;
 
 import com.sparta.todocard.dto.CommentRequestDto;
 import com.sparta.todocard.dto.CommentResponseDto;
+import com.sparta.todocard.global.aop.PerfLogging;
 import com.sparta.todocard.global.security.UserDetailsImpl;
 import com.sparta.todocard.service.CommentServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/todos")
 @RequiredArgsConstructor
+@PerfLogging
+@Component
 public class CommentController {
 
 
